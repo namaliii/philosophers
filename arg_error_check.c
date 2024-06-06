@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:28:34 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/06 16:48:36 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:50:26 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,29 @@ int	negative_check(char **argv)
 	return (0);
 }
 
+int	numeric_check(char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (argv[i])
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (ft_isdigit(argv[i][j]) == 0)
+			{
+				printf("Args should be numeric, dude\n");
+				return (1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	args_check(int argc, char **argv)
 {
 	int	i;
@@ -59,19 +82,7 @@ int	args_check(int argc, char **argv)
 	}
 	if (negative_check(argv) == 1)
 		return (1);
-	while (argv[i])
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (ft_isdigit(argv[i][j]) == 0)
-			{
-				printf("Args should be numeric, dude\n");
-				return (1);
-			}
-			j++;
-		}
-		i++;
-	}
+	if (numeric_check(argv) == 1)
+		return (1);
 	return (0);
 }
