@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 18:47:05 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/06 19:08:16 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:20:37 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	create_threads(int philos_no, t_philo **philos_array)
 				NULL, &routine, philos_array[i]) != 0)
 		{
 			perror("Failed to create a thread\n");
-			return (NULL);
+			return ;
 		}
 		i++;
 	}
@@ -55,7 +55,10 @@ void	create_threads(int philos_no, t_philo **philos_array)
 	while (philos_no != 1 && i < philos_no)
 	{
 		if (pthread_join(philos_array[i]->thread, NULL) != 0)
-			return (NULL);
+		{
+			perror("Failed to join a thread\n");
+			return ;
+		}
 		printf("Thread %d has finished execution\n", i);
 		i++;
 	}

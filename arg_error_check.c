@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:28:34 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/06 17:50:26 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:19:45 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	numeric_check(char **argv)
 int	args_check(int argc, char **argv)
 {
 	int	i;
-	int	j;
 
 	i = 1;
 	if (argc != 5 && argc != 6)
