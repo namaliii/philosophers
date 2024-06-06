@@ -6,15 +6,18 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 18:47:05 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/06 18:49:31 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:08:16 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	*routine(t_philo *philo)
+void	*routine(void *arg)
 {
-	printf("ID: %d\n", philo->id);
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	printf("Thread created for: %d\n", philo->id);
 	return (NULL);
 }
 
@@ -29,6 +32,31 @@ void	assign_forks(t_philo **philos_array)
 			philos_array[i + 1]->left_fork = &(philos_array[i]->right_fork);
 		else
 			philos_array[0]->left_fork = &(philos_array[i]->right_fork);
+		i++;
+	}
+}
+
+void	create_threads(int philos_no, t_philo **philos_array)
+{
+	int	i;
+
+	i = 0;
+	while (philos_no != 1 && i < philos_no)
+	{
+		if (pthread_create(&(philos_array[i]->thread),
+				NULL, &routine, philos_array[i]) != 0)
+		{
+			perror("Failed to create a thread\n");
+			return (NULL);
+		}
+		i++;
+	}
+	i = 0;
+	while (philos_no != 1 && i < philos_no)
+	{
+		if (pthread_join(philos_array[i]->thread, NULL) != 0)
+			return (NULL);
+		printf("Thread %d has finished execution\n", i);
 		i++;
 	}
 }
@@ -57,6 +85,7 @@ t_philo	**init_philos(char **argv, t_data *data)
 		i++;
 	}
 	assign_forks(philos_array);
+	create_threads(philos_no, philos_array);
 	return (philos_array);
 }
 
