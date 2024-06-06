@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:28:34 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/06 19:19:45 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:24:44 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	negative_check(char **argv)
 	{
 		if (i < 5 && ft_atoi(argv[i]) <= 0)
 		{
-			printf("Arguments should be bigger than 0, dude\n");
+			printf("Arguments should be bigger than 0\n");
 			return (1);
 		}
 		else if (i == 5 && ft_atoi(argv[i]) < 0)
@@ -79,9 +79,7 @@ int	args_check(int argc, char **argv)
 		printf("Don't go too crazy with the numbers\n");
 		return (1);
 	}
-	if (negative_check(argv) == 1)
-		return (1);
-	if (numeric_check(argv) == 1)
+	if (negative_check(argv) == 1 || numeric_check(argv) == 1)
 		return (1);
 	return (0);
 }
