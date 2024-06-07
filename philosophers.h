@@ -6,16 +6,18 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:40:29 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/06 19:08:52 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:58:58 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
+# include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 # define MAX_PHILOS 200
 
@@ -43,5 +45,8 @@ void	assign_forks(t_philo **philos_array);
 t_philo	**init_philos(char **argv, t_data *data);
 t_data	*init_data(void);
 void	create_threads(int philos_no, t_philo **philos_array);
+
+long	get_time(void);
+void	ft_usleep(long sleep_time);
 
 #endif

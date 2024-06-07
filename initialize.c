@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 18:47:05 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/06 19:20:37 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:05:52 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	create_threads(int philos_no, t_philo **philos_array)
 			perror("Failed to join a thread\n");
 			return ;
 		}
-		printf("Thread %d has finished execution\n", i);
+		printf("Thread %d has finished execution\n", (i + 1));
 		i++;
 	}
 }

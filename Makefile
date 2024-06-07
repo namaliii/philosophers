@@ -4,11 +4,11 @@ GCC		:= gcc -pthread
 CFLAGS	:= -Wextra -Wall -Werror
 
 SRCS	:= arg_error_check.c ft_atoi.c initialize.c \
-			philo.c
+			philo.c time.c
 
 OBJS	:= ${SRCS:.c=.o}
 
-all		:= $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	@echo "Philosophers are taking their places around the table..."
