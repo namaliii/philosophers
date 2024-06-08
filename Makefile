@@ -1,6 +1,6 @@
 NAME	:= philosophers
 
-GCC		:= gcc -pthread
+CC		:= cc  -fsanitize=address
 CFLAGS	:= -Wextra -Wall -Werror
 
 SRCS	:= arg_error_check.c ft_atoi.c initialize.c \

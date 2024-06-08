@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:40:29 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/07 19:58:58 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/08 19:00:19 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,20 @@
 
 typedef struct s_data
 {
-	int		test;
+	int		sleep_time;
+	int		eating_time;
+	int		time_to_die;
+	int		meals_no;
+	int		philos_no;
+	long	start_time;
 }	t_data;
 
 typedef struct s_philo
 {
+	pthread_t		thread;
 	pthread_mutex_t	right_fork;
 	pthread_mutex_t	*left_fork;
-	pthread_t		thread;
+	pthread_mutex_t	print;
 	int				id;
 	t_data			*data;
 }	t_philo;
@@ -43,7 +49,7 @@ int		numeric_check(char **argv);
 
 void	assign_forks(t_philo **philos_array);
 t_philo	**init_philos(char **argv, t_data *data);
-t_data	*init_data(void);
+t_data	*init_data(char **argv);
 void	create_threads(int philos_no, t_philo **philos_array);
 
 long	get_time(void);
