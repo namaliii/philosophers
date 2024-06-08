@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 18:47:05 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/08 20:12:28 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/08 21:17:52 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,12 @@ t_data	*init_data(char **argv)
 	data->eating_time = ft_atoi(argv[3]);
 	data->sleep_time = ft_atoi(argv[4]);
 	data->start_time = get_time();
-	pthread_mutex_init(&(data->print), NULL);
+	data->odd_flag = 0;
+	if (data->philos_no % 2 != 0)
+		data->odd_flag = 1;
+	pthread_mutex_init(&(data->print_mutex), NULL);
+	pthread_mutex_init(&(data->meals_mutex), NULL);
 	if (argv[5])
-		data->meals_no = ft_atoi(argv[5]);
+		data->meals_no = ft_atoi(argv[5]) * data->philos_no;
 	return (data);
 }
