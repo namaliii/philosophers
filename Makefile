@@ -4,7 +4,8 @@ CC		:= cc  -fsanitize=address
 CFLAGS	:= -Wextra -Wall -Werror
 
 SRCS	:= arg_error_check.c ft_atoi.c initialize.c \
-			philo.c time.c
+			philo.c time.c pick_drop_forks.c routine.c \
+			eat_think_sleep.c
 
 OBJS	:= ${SRCS:.c=.o}
 

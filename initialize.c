@@ -6,59 +6,16 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 18:47:05 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/08 19:02:11 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/08 20:12:28 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	lock_print(t_philo *philo, char *msg, long time)
-{
-	pthread_mutex_lock(&(philo->print));
-	printf("%lu %d %s\n", time, philo->id, msg);
-	pthread_mutex_unlock(&(philo->print));
-}
-
-void	take_right_fork(t_philo *philo)
-{
-	pthread_mutex_lock(&(philo->right_fork));
-	lock_print(philo, "has taken a right fork", get_time() - philo->data->start_time);
-}
-
-void	take_left_fork(t_philo *philo)
-{
-	pthread_mutex_lock(philo->left_fork);
-	lock_print(philo, "has taken a left fork", get_time() - philo->data->start_time);
-}
-
-void	leave_right_fork(t_philo *philo)
-{
-	pthread_mutex_unlock(&(philo->right_fork));
-	lock_print(philo, "has released the right fork", get_time() - philo->data->start_time);
-}
-
-void	leave_left_fork(t_philo *philo)
-{
-	pthread_mutex_unlock(philo->left_fork);
-	lock_print(philo, "has released the left fork", get_time() - philo->data->start_time);
-}
-
-void	*routine(void *arg)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
-	take_right_fork(philo);
-	take_left_fork(philo);
-	leave_right_fork(philo);
-	leave_left_fork(philo);
-	return (NULL);
-}
-
 void	assign_forks(t_philo **philos_array)
 {
 	int	i;
-	int number_philos;
+	int	number_philos;
 
 	i = 0;
 	number_philos = philos_array[0]->data->philos_no;
@@ -82,10 +39,7 @@ void	create_threads(int philos_no, t_philo **philos_array)
 	{
 		if (pthread_create(&(philos_array[i]->thread),
 				NULL, &routine, philos_array[i]) != 0)
-		{
 			perror("Failed to create a thread\n");
-			return ;
-		}
 		i++;
 	}
 	i = 0;
@@ -99,6 +53,10 @@ void	create_threads(int philos_no, t_philo **philos_array)
 	// 	printf("Thread %d has finished execution\n", (i + 1));
 	// 	i++;
 	// }
+	while(1)
+	{
+		;
+	}
 }
 
 t_philo	**init_philos(char **argv, t_data *data)
@@ -141,6 +99,7 @@ t_data	*init_data(char **argv)
 	data->eating_time = ft_atoi(argv[3]);
 	data->sleep_time = ft_atoi(argv[4]);
 	data->start_time = get_time();
+	pthread_mutex_init(&(data->print), NULL);
 	if (argv[5])
 		data->meals_no = ft_atoi(argv[5]);
 	return (data);
