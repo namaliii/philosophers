@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eat_think_sleep.c                                  :+:      :+:    :+:   */
+/*   eat.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:10:34 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/08 21:04:37 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:21:01 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	decrement_meals(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->meals_mutex));
-	philo->data->meals_no--;
+	if (philo->data->meals_no != 777)
+		philo->data->meals_no--;
+	philo->last_meal = get_time() - philo->data->start_time;
 	pthread_mutex_unlock(&(philo->data->meals_mutex));
 }
 
@@ -25,7 +27,7 @@ int	meals_check(t_philo *philo)
 	if (philo->data->meals_no <= 0)
 	{
 		pthread_mutex_unlock(&(philo->data->meals_mutex));
-		return(0);
+		return (0);
 	}
 	else
 	{
@@ -39,15 +41,4 @@ void	eat_spaghetti(t_philo *philo)
 	decrement_meals(philo);
 	lock_print(philo, "is eating", get_time() - philo->data->start_time);
 	ft_usleep(philo->data->eating_time);
-}
-
-void	think(t_philo *philo)
-{
-	lock_print(philo, "is thinking", get_time() - philo->data->start_time);
-}
-
-void	go_to_sleep(t_philo *philo)
-{
-	lock_print(philo, "is sleeping", get_time() - philo->data->start_time);
-	ft_usleep(philo->data->sleep_time);
 }

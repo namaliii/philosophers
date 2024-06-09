@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 18:47:05 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/08 21:17:52 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:49:12 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	assign_forks(t_philo **philos_array)
 			philos_array[i + 1]->left_fork = &(philos_array[i]->right_fork);
 			i++;
 		}
-		philos_array[0]->left_fork = &(philos_array[number_philos - 1]->right_fork);
+		philos_array[0]->left_fork
+			= &(philos_array[number_philos - 1]->right_fork);
 	}
 }
 
@@ -42,22 +43,22 @@ void	create_threads(int philos_no, t_philo **philos_array)
 			perror("Failed to create a thread\n");
 		i++;
 	}
-	i = 0;
-	// while (philos_no != 1 && i < philos_no)
+	// while (1)
 	// {
-	// 	if (pthread_join(philos_array[i]->thread, NULL) != 0)
-	// 	{
-	// 		perror("Failed to join a thread\n");
-	// 		return ;
-	// 	}
-	// 	printf("Thread %d has finished execution\n", (i + 1));
-	// 	i++;
+	// 	if (philo->data->)
 	// }
-	while(1)
+	i = 0;
+	while (i < philos_no)
 	{
-		;
+		if (pthread_join(philos_array[i]->thread, NULL) != 0)
+		{
+			perror("Failed to join a thread\n");
+			return ;
+		}
+		i++;
 	}
 }
+
 
 t_philo	**init_philos(char **argv, t_data *data)
 {
@@ -79,6 +80,7 @@ t_philo	**init_philos(char **argv, t_data *data)
 			return (NULL);
 		philos_array[i]->id = i + 1;
 		philos_array[i]->data = data;
+		philos_array[i]->last_meal = 0;
 		pthread_mutex_init(&(philos_array[i]->right_fork), NULL);
 		i++;
 	}
@@ -93,17 +95,15 @@ t_data	*init_data(char **argv)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
-	data->meals_no = -1;
+	data->meals_no = 777;
 	data->philos_no = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->eating_time = ft_atoi(argv[3]);
 	data->sleep_time = ft_atoi(argv[4]);
 	data->start_time = get_time();
-	data->odd_flag = 0;
-	if (data->philos_no % 2 != 0)
-		data->odd_flag = 1;
 	pthread_mutex_init(&(data->print_mutex), NULL);
 	pthread_mutex_init(&(data->meals_mutex), NULL);
+	pthread_mutex_init(&(data->death_mutex), NULL);
 	if (argv[5])
 		data->meals_no = ft_atoi(argv[5]) * data->philos_no;
 	return (data);

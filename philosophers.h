@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:40:29 by anamieta          #+#    #+#             */
-/*   Updated: 2024/06/08 21:16:25 by anamieta         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:10:14 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ typedef struct s_data
 	int				meals_no;
 	int				philos_no;
 	long			start_time;
-	int				odd_flag;
 	pthread_mutex_t	meals_mutex;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	death_mutex;
 }	t_data;
 
 typedef struct s_philo
@@ -40,6 +40,7 @@ typedef struct s_philo
 	pthread_mutex_t	right_fork;
 	pthread_mutex_t	*left_fork;
 	int				id;
+	int				last_meal;
 	t_data			*data;
 }	t_philo;
 
@@ -73,6 +74,6 @@ void	go_to_sleep(t_philo *philo);
 
 int		meals_check(t_philo *philo);
 void	decrement_meals(t_philo *philo);
-int		philo_no_is_even(t_philo *philo);
+int		dead_check(t_philo *philo);
 
 #endif
